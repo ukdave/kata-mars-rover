@@ -1,0 +1,26 @@
+---
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.0.2
+  DisplayCopNames: true
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 120
+Layout/SpaceInsideBlockBraces:
+  SpaceBeforeBlockParameters: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses_except_multiline
+Style/ParallelAssignment:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
