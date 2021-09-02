@@ -13,6 +13,11 @@ Layout/LineLength:
 Layout/SpaceInsideBlockBraces:
   SpaceBeforeBlockParameters: false
 
+Naming/MethodParameterName:
+  AllowedNames:
+    - x
+    - y
+
 RSpec/NamedSubject:
   Enabled: false
 

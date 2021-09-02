@@ -1,18 +1,26 @@
 # frozen_string_literal: true
 
+require "grid"
+
 class Rover
   DIRECTIONS = %w[N E S W].freeze
 
-  def initialize grid_size: 10
+  def initialize grid: Grid.new
     @x = 0
     @y = 0
     @direction = "N"
-    @grid_size = grid_size
+    @grid = grid
   end
 
   def execute command
-    command.chars.each {|instruction| process(instruction) }
-    "#{@x}:#{@y}:#{@direction}"
+    obstacle = false
+    command.chars.each do |instruction|
+      unless process(instruction)
+        obstacle = true
+        break
+      end
+    end
+    "#{obstacle ? 'O:' : ''}#{@x}:#{@y}:#{@direction}"
   end
 
   private
@@ -32,18 +40,24 @@ class Rover
     dir_index = DIRECTIONS.find_index(@direction)
     dir_index = (dir_index + step) % DIRECTIONS.length
     @direction = DIRECTIONS[dir_index]
+    true
   end
 
   def move
+    new_x, new_y = @x, @y
     case @direction
     when "N"
-      @y = (@y + 1) % @grid_size
+      new_y = (@y + 1) % @grid.size
     when "E"
-      @x = (@x + 1) % @grid_size
+      new_x = (@x + 1) % @grid.size
     when "S"
-      @y = (@y - 1) % @grid_size
+      new_y = (@y - 1) % @grid.size
     when "W"
-      @x = (@x - 1) % @grid_size
+      new_x = (@x - 1) % @grid.size
     end
+    return false if @grid.obstacle?(new_x, new_y)
+
+    @x, @y = new_x, new_y
+    true
   end
 end

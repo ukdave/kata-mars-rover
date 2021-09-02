@@ -27,5 +27,11 @@ describe Rover do
     it "wraps around the end of the grid (west)" do
       expect(subject.execute("LM")).to eq "9:0:W"
     end
+
+    it "stops when it reaches an obstacle" do
+      grid = Grid.new(obstacles: [[0, 3]])
+      rover = described_class.new(grid: grid)
+      expect(rover.execute("MMMM")).to eq "O:0:2:N"
+    end
   end
 end
